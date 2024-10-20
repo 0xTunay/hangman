@@ -122,8 +122,8 @@ std::string RandomWord() {
     int size = sizeof(str) / sizeof(*str);
     int r = rand() % size;
 #elif __linux__ 
-    std::vector<string> = {"hello","word"};
-    int r = rand() % str.size()
+        std::vector<std::string> str = {"hello", "world"};
+        int r = rand() % str.size();
 #endif
     return str[r];
 }
