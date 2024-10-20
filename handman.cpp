@@ -1,41 +1,54 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
-
-void ShowTable(string table){
-    cout << table << endl;
+/* 
+    +---+---+\n
+    | a | b |\n  
+    +---+---+
+*/
+void DrawLine(int n){
+    for(int i = 0; i<n;++i){
+        cout << "+---";
+    }
+    cout << "+";
 }
-char input()
-{
+void ShowTable(string table){
+    DrawLine(table.size());
+    cout << "\n";
+    for(int i = 0; i< table.size();++i){
+        cout << "| " << table[i] << " ";
+    }
+    cout << "|\n"; 
+    DrawLine(table.size());
+}
+
+char input(){
     char c;
-    cout << "enter letter" << endl;
+    cout << "\n enter letter" << endl;
     cin >> c;
 
     return c;
 }
-bool ShowLetter(string &table,string word,char c)
-{
+bool OpenLetter(string &table,string word,char c){
     bool found = false;
-    for(int i = 0;i<word.size();i++){
+    for(int i =0; i < word.size();i++){
         if(word[i] == c){
             table[i] = c;
 
             found = true;
         }
     }
-
     return found;
 }
 void drawHangman(int attemptsLeft) 
     { 
-        // Add your hangman drawing logic here 
-        // For simplicity, you can print a static hangman 
-        // ASCII art Modify this function to display the 
-        // hangman as you like 
         if (attemptsLeft == 0) { 
             cout << "   _____" << endl; 
             cout << "  |     |" << endl; 
@@ -93,34 +106,50 @@ void drawHangman(int attemptsLeft)
         else if (attemptsLeft == 6) { 
             cout << "   _____" << endl; 
             cout << "  |     |" << endl; 
-            cout << "  |     O" << endl; 
+            cout << "  |     " << endl; 
             cout << "  |    /|\\" << endl; 
             cout << "  |    / \\" << endl; 
             cout << "  |" << endl; 
             cout << "  |" << endl; 
         } 
     } 
+std::string RandomWord() {
+    std::vector<std::string> str {
+        "hello",
+        "world"
+    };
+    int r = rand() % str.size();
+
+    return str[r];
+    /*FIX MISTAKE*/
+}
+
+
+
+
 int main(void)
 {
-    string word = "headmap";
-    string table = "-------";
+    srand(time(0));
+    string word = RandomWord();
+    string table(word.size(), ' ');
     char c;
     int error = 0;
-
-    while(table != word && error < 6){
+    
+  while(table != word && error < 6){
         drawHangman(error);
         ShowTable(table);
         c = input();
-        if(!ShowLetter(table,word,c)){
+        if(!OpenLetter(table,word,c)){
             error++;
             drawHangman(error);
-
+            system("cls");
         }
     }
+        ShowTable(table);
     if(table == word){
-        cout << "you won" << endl;
+        cout << "\nyou won" << endl;
     } else {
-        cout << "you lose" << endl;
+        cout << "\nyou lose" << endl;
     }
     return 0;
 }
