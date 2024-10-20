@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
+
+#ifdef __linux__
+    #include <vector>
+#endif
 
 using std::cout;
 using std::cin;
@@ -114,14 +117,15 @@ void drawHangman(int attemptsLeft)
         } 
     } 
 std::string RandomWord() {
-    std::vector<std::string> str {
-        "hello",
-        "world"
-    };
-    int r = rand() % str.size();
-
+#ifdef __APPLE__
+    string str[] = {"hello","word"};
+    int size = sizeof(str) / sizeof(*str);
+    int r = rand() % size;
+#elif __linux__ 
+    std::vector<string> = {"hello","word"};
+    int r = rand() % str.size()
+#endif
     return str[r];
-    /*FIX MISTAKE*/
 }
 
 
