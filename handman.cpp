@@ -140,13 +140,13 @@ int main(void)
     int error = 0;
     
   while(table != word && error < 6){
+        system("clear");
         drawHangman(error);
         ShowTable(table);
         c = input();
         if(!OpenLetter(table,word,c)){
             error++;
             drawHangman(error);
-            system("cls");
         }
     }
         ShowTable(table);
